@@ -281,7 +281,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
      */
     protected String[] getLibraries() {
         return new String[] {
-            "SDL2_Debug",
             "OpenSLES",
             // "SDL2_image",
             // "SDL2_mixer",
@@ -2152,6 +2151,13 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                     break;
 
                 case MotionEvent.ACTION_CANCEL:
+                    // The system (palm rejection, OEM multi-finger gestures,
+                    // edge/navigation zones) stole the touch stream: all
+                    // pointers report UP even if the fingers stay on screen.
+                    // SDL forwards synthetic UPs below, which releases all
+                    // in-game buttons at once. Log to trace phantom zoom-outs.
+                    Log.w("SDL", "onTouch: ACTION_CANCEL for " + pointerCount
+                            + " pointer(s) - touch stream taken by the system");
                     for (i = 0; i < pointerCount; i++) {
                         pointerFingerId = event.getPointerId(i);
                         x = event.getX(i) / mWidth;
