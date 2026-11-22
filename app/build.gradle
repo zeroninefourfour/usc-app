@@ -34,6 +34,8 @@ android {
                           "-DCMAKE_TOOLCHAIN_FILE=$System.env.PROJECT_PATH/vcpkg/scripts/buildsystems/vcpkg.cmake",
                           "-DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=$ndkDir/build/cmake/android.toolchain.cmake",
                           "-DVCPKG_TARGET_TRIPLET=$System.env.VCPKG_TARGET_TRIPLET",
+                          "-DVCPKG_OVERLAY_PORTS=$System.env.PROJECT_PATH/vcpkg-overlay/ports",
+                          "-DVCPKG_OVERLAY_TRIPLETS=$System.env.PROJECT_PATH/vcpkg-overlay/triplets",
                           "-DANDROID_ABI=$System.env.ANDROID_ABI"
             }
         }
